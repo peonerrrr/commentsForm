@@ -149,14 +149,19 @@ $('#addComment').on('submit', function(e){
     function redirectSleep(){
     window.location.replace("/");
 }
+
 $('#authForm').on('submit', function(event){
     event.preventDefault();
     $.post('auth.php', $(this).serialize(), function(data){
+        console.log(data);
         if(data == 'error'){
             $('.alert').show('fast').addClass('alert-success').text('Неверные данные');
         }else if(data == 'notAllVal'){
             $('.alert').show('fast').addClass('alert-success').text('Остались пустые поля');
-        }else{
+        }else if(data == 'passwordError'){
+            $('.alert').show('fast').addClass('alert-success').text('Неверный пароль');
+        }
+        else{
         	function timer(){
 			 var obj=document.getElementById('timer_inp');
 			 obj.innerHTML--;
@@ -171,4 +176,39 @@ $('#authForm').on('submit', function(event){
     });
 });
 
+
+$('#c-send').on('submit', function(event){ 
+          $.post('process.php', 
+            $(this).serialize(), 
+              function(data){
+              if (data == 'usernameexists') {
+                $('#error').show('fast').removeClass('alert-success').addClass('alert-danger').text("Пользователь с таким логином уже существует");
+              }
+              if (data == 'success') {
+                $('#error').show('fast').removeClass('alert-danger').addClass('alert-success').html("Вы упешно зарегестрировались");
+                function location(){
+                  window.location.replace("/form-auth.php");
+                }
+                setTimeout(location, 2000);
+
+              }
+              if (data == 'empty') {
+                $('#error').show('fast').addClass('alert-danger').html("Заполните все поля");
+
+              }
+               if (data == 'mailError') {
+                $('#error').show('fast').addClass('alert-danger').html("e-mail введен не корректно");
+
+              }
+              if (data == 'telError') {
+                $('#error').show('fast').addClass('alert-danger').html("Телефон введен не корректно");
+
+              }
+              if (data == 'userNameError') {
+                $('#error').show('fast').addClass('alert-danger').html("Пользователь с таким логином уже существует!");
+              }
+
+          });
+        event.preventDefault();
+    });
 });

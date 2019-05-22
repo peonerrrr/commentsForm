@@ -66,5 +66,24 @@ class QueryBuild
         return $user;
 
     }
+    function searchUserName($name){
+
+       // 1. Проверить существует ли пользователь в базе
+        $sql = "SELECT * FROM users WHERE `name`=:name";
+        $statement = $this->pdo->prepare($sql);
+        $statement->bindParam(":name", $name);
+        $statement->execute();
+        $user = $statement->fetch(PDO::FETCH_ASSOC);
+        return $user;
+
+    }
+    function addUser($data){
+        $keys = array_keys($data);
+        $stringArrayKeys = implode(',', $keys);
+        $placeholders = ":" . implode(', :', $keys);
+        $sql = "INSERT INTO users ($stringArrayKeys) VALUES ($placeholders)";
+        $statement = $this->pdo->prepare($sql);
+        $statement->execute($data); //true || false
+    }
 
 }

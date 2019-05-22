@@ -75,10 +75,10 @@
     <div class="row">
         <div class="col-md-12">
             <h1>Добавить комментарий</h1>
-            <?php if ($_SESSION['user']['userName'] != 'admin'): ?>
+            <?php if (!$_SESSION['user']['userName']): ?>
              <p><a href="/form-auth.php">Войти</a> как администратор</p>
              <?php else: ?>
-            <p>Пользователь, <?php echo $_SESSION['user']['userName'] ?> <a href="/logout.php">выход</a> </p>
+            <p>Добро пожаловать, <?php echo $_SESSION['user']['userName'] ?> <a href="/logout.php">выход</a> </p>
             <?php endif ?>
             <div id="errors-block" class="alert alert-danger" style="display: none;"></div>
             <form id="addComment" action="store.php" method="post" enctype=multipart/form-data>
