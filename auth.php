@@ -10,7 +10,7 @@ require "database/QueryBuild.php";
       if (password_verify($_POST['password'], $user['password']) == 1) {
         $_SESSION = [];
         $_SESSION = array_merge($_SESSION, array('user' => array(
-              'userName' => $_POST['name'] 
+              'userName' => $user['name'], 'userEmail' => $user['mail'], 'userTel' => $user['tel']
             )));
         echo json_encode($_SESSION);
       }else{

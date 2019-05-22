@@ -15,6 +15,7 @@
   
 	<main>
 
+      <p style="padding: 25px; text-align: right;"><a class="btn btn-success" href="/form-auth.php">Войти</a></p>
     <div class="container-form">
       <h1>Регистрация</h1>
       <form method="post" id="c-send">
@@ -34,11 +35,11 @@
             Ваш пароль 
         		<input type="password" class="form-control" id='password' name="password" placeholder="Пароль" >
       	</div>
-         <a class="btn btn-primary" href="/form-auth.php">Войти</a>
+         
         <button id="signup" class="btn btn-success" type="submit">Зарегистрироваться</button>
         <div class="alert" id="error"></div>
       </form>
-
+      
     </div>
 </div>
 <style>

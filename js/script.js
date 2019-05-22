@@ -34,6 +34,7 @@ $('#addComment').on('submit', function(e){
                 // $('#errors-block').show('fast').removeClass('alert-danger').addClass('alert-success').text('Ваш комментарий добавлен');
                 var data = jQuery.parseJSON(data);
                 $('#addComment').addClass('alert-success').addClass('alert').html("<b>Ваш комментарий добавлен</b>");
+                $('#errors-block').hide('fast');   
                 if (data.user.userName == 'admin') {
                 $('.comments-list').append(`
                     <li>
