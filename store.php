@@ -1,7 +1,7 @@
 <?php session_start();
 require "database/QueryBuild.php";
 
-if (isset($_POST['comName']) && isset($_POST['comEmail']) && isset($_POST['comText']) && $_FILES['comImage']['size'] > 0){
+if (isset($_POST['comName']) && isset($_POST['comEmail']) && isset($_POST['comText'])){
 
 	$db = new QueryBuild();
 	$data = [];
@@ -24,23 +24,15 @@ if (isset($_POST['comName']) && isset($_POST['comEmail']) && isset($_POST['comTe
 		echo "textLenght";
 		return;
 	}
-
-	if($_FILES['comImage']['size'] > (5 * 1024 * 1024)) {
-		echo "sizeImage";
-		return;
-	}
-	$imageinfo = $_FILES['comImage']['type'];
-	$arr = array('image/jpeg','image/gif','image/png');
-
-	if(in_array($imageinfo , $arr) == 0){
-		echo "typeImage";
-		return;
-	}
-	 else {
+	 if (!$_SESSION['user']['userName']) {
 		$upload_dir = 'image/'; //имя папки с картинками
 		$nameImg = $upload_dir.basename($_FILES['comImage']['name']);
 		$mov = move_uploaded_file($_FILES['comImage']['tmp_name'],$nameImg);
 		array_push($data, array('name' => $name, 'email' => $email, 'text' => $text, 'image' => $nameImg, 'date' => $date));
+	  }else{
+	 	$nameImg = $_POST['comImage'];
+		array_push($data, array('name' => $name, 'email' => $email, 'text' => $text, 'image' => $nameImg, 'date' => $date));
+		}
 
 		$data = $db->addComment('comments', $data[0]);
 		$count = count($data);
@@ -51,7 +43,6 @@ if (isset($_POST['comName']) && isset($_POST['comEmail']) && isset($_POST['comTe
 			$data[$count - 1] = array_merge($data[$count - 1], $_SESSION);
 		}
 		echo json_encode($data[$count - 1]);
-	}
 }else{
 
 	echo "emptyVars";

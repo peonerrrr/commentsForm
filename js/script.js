@@ -9,28 +9,30 @@ $('#addComment').on('submit', function(e){
         formData.append('comEmail', $('input#comEmail').val());
         formData.append('comText', $('#comText').val());
         formData.append('comDate', $('input#comDate').val());
+        formData.append('comImage', $('input#comImage').val());
        $.ajax({
         url: "store.php",
         type: "POST",
-        // dataType : "json", 
         cache: false,
         contentType: false,
         processData: false,         
         data: formData, //указываем что отправляем
         success: function(data){
+            console.log(data);
             if (data == 'nameLenght') {
                 $('#errors-block').show('fast').text('Длина поля (Имя) должно быть менее 50 символов');
             }else if(data == 'errorEmail'){
                 $('#errors-block').show('fast').text('e-mail введен не верно!');
-            }else if(data == 'sizeImage'){
-                $('#errors-block').show('fast').text('Размер файла не должен превышать 5Мб');
-            }else if(data == 'typeImage'){
-                $('#errors-block').show('fast').text('Картинка должна быть формата JPG, GIF или PNG');
             }else if(data == 'emptyVars'){
                 $('#errors-block').show('fast').text('Заполните все поля');
             }else if(data == 'textLenght'){
                 $('#errors-block').show('fast').text('Длина поля (Сообщение) должно быть менее 200 символов');   
-            }else {
+            }else if(data == 'sizeImage'){
+            $('#error').show('fast').addClass('alert-danger').html('Размер файла не должен превышать 5Мб');
+            }else if(data == 'typeImage'){
+                $('#error').show('fast').addClass('alert-danger').html('Картинка должна быть формата JPG, GIF или PNG');
+            }
+            else {
                 // $('#errors-block').show('fast').removeClass('alert-danger').addClass('alert-success').text('Ваш комментарий добавлен');
                 var data = jQuery.parseJSON(data);
                 $('#addComment').addClass('alert-success').addClass('alert').html("<b>Ваш комментарий добавлен</b>");
@@ -40,7 +42,7 @@ $('#addComment').on('submit', function(e){
                     <li>
                         <div class="comment-body">
                             <div class="image-wrapper">
-                                <img src="`+ data['image'] +`">
+                                <img src="`+ data['user']['userImage'] +`">
                             </div>
                             <div class="person-info-block"><b>` + data['name'] + `</b>
                                 <p class="comments-email">`+ data['email'] +`</p>
@@ -179,10 +181,24 @@ $('#authForm').on('submit', function(event){
 });
 
 
-$('#c-send').on('submit', function(event){ 
-          $.post('process.php', 
-            $(this).serialize(), 
-              function(data){
+$('#c-send').on('submit', function(event){
+var formData = new FormData();
+        jQuery.each($('#avatar')[0].files, function(i, file) {
+            formData.append('image', file);
+        });
+        formData.append('name', $('input#name').val());
+        formData.append('mail', $('input#mail').val());
+        formData.append('tel', $('#tel').val());
+        formData.append('password', $('input#password').val()); 
+          $.ajax({
+        url: "process.php",
+        type: "POST",
+        cache: false,
+        contentType: false,
+        processData: false,         
+        data: formData, //указываем что отправляем
+        success: function(data){
+            console.log(data);
               if (data == 'usernameexists') {
                 $('#error').show('fast').removeClass('alert-success').addClass('alert-danger').text("Пользователь с таким логином уже существует");
               }
@@ -206,11 +222,18 @@ $('#c-send').on('submit', function(event){
                 $('#error').show('fast').addClass('alert-danger').html("Телефон введен не корректно");
 
               }
+              if(data == 'sizeImage'){
+                $('#error').show('fast').addClass('alert-danger').html('Размер файла не должен превышать 5Мб');
+                }
+                if(data == 'typeImage'){
+                    $('#error').show('fast').addClass('alert-danger').html('Картинка должна быть формата JPG, GIF или PNG');
+                }
               if (data == 'userNameError') {
                 $('#error').show('fast').addClass('alert-danger').html("Пользователь с таким логином уже существует!");
               }
 
-          });
+          }
+      });
         event.preventDefault();
     });
 });

@@ -4,7 +4,7 @@
 <html>
 <head>
   <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href='css/bootstrap.css' crossorigin="anonymous">
   <script
   src="https://code.jquery.com/jquery-3.4.1.min.js"
   integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
@@ -18,7 +18,7 @@
       <p style="padding: 25px; text-align: right;"><a class="btn btn-success" href="/form-auth.php">Войти</a></p>
     <div class="container-form">
       <h1>Регистрация</h1>
-      <form method="post" id="c-send">
+      <form method="post" id="c-send" enctype=multipart/form-data>
       	<div class="form-group">
           Ваш логин
       		<input type="text" class="form-control" name='name' id='name' placeholder="Логин">
@@ -35,6 +35,10 @@
             Ваш пароль 
         		<input type="password" class="form-control" id='password' name="password" placeholder="Пароль" >
       	</div>
+        <div class="form-group">
+            Аватарка 
+            <input type="file" class="form-control" id='avatar' name="avatar">
+        </div>
          
         <button id="signup" class="btn btn-success" type="submit">Зарегистрироваться</button>
         <div class="alert" id="error"></div>
@@ -76,5 +80,6 @@
     }
   }
 </style>
+<script src="js/jQuery.min.js"></script>
 <script src="js/script.js"></script>
 </html>

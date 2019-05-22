@@ -4,7 +4,7 @@
     <!doctype html>
     <html lang="en">
     <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href='css/bootstrap.css' crossorigin="anonymous">
     <link rel="stylesheet" href="css/style.css">
     <title>Страница комментариев(Тест)</title>
     </head>
@@ -49,6 +49,7 @@
                 <?php endforeach ?>
              <?php else: ?>
                     <?php foreach ($comments as $comment): ?>
+
                     <li>
                         <div class="comment-body">
                             <div class="image-wrapper">
@@ -94,8 +95,8 @@
                     <textarea id="comText" name="comText" class="form-control"></textarea>
                 </div>
                 <div class="form-group">Фото
-                    <input id="comImage" type="file" name="comImage" class="form-control"></input>
-                </div>
+                   <input id="comImage" type="file" name="comImage" class="form-control"></input>
+               </div>
                     <input id="comDate" type="hidden" name="comDate" class="form-control" value="<?php echo date("Y-m-d H:i:s"); ?>"></input>
 
                 <div class="form-group">
@@ -114,13 +115,13 @@
                 <div class="form-group">
                     <input id="comEmail" type="hidden" name="comEmail" class="form-control" value="<?php echo $_SESSION['user']['userEmail'] ?>"></input>
                 </div>
-
+                
                 <div class="form-group">Сообщение
                     <textarea id="comText" name="comText" class="form-control"></textarea>
                 </div>
-                <div class="form-group">Фото
-                    <input id="comImage" type="file" name="comImage" class="form-control"></input>
-                </div>
+                <div class="form-group">
+                   <input id="comImage" type="hidden" name="comImage" class="form-control" value="<?php echo $_SESSION['user']['userImage'] ?>"></input>
+               </div>
                     <input id="comDate" type="hidden" name="comDate" class="form-control" value="<?php echo date("Y-m-d H:i:s"); ?>"></input>
 
                 <div class="form-group">
