@@ -97,7 +97,7 @@
                 <div class="form-group">Фото
                     <input id="comImage" type="file" name="comImage" class="form-control"></input>
                 </div>
-                    <input id="comDate" type="hidden" name="comDate" class="form-control" value="<?php echo date(DATE_RFC2822) ?>"></input>
+                    <input id="comDate" type="hidden" name="comDate" class="form-control" value="<?php echo date("Y-m-d H:i:s"); ?>"></input>
 
                 <div class="form-group">
                     <button id="btn_add" class="btn btn-success" type="submit">Добавить</button>

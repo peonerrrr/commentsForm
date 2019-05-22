@@ -31,8 +31,9 @@ $('#addComment').on('submit', function(e){
             }else if(data == 'textLenght'){
                 $('#errors-block').show('fast').text('Длина поля (Сообщение) должно быть менее 200 символов');   
             }else {
-                $('#errors-block').show('fast').removeClass('alert-danger').addClass('alert-success').text('Ваш комментарий добавлен');
+                // $('#errors-block').show('fast').removeClass('alert-danger').addClass('alert-success').text('Ваш комментарий добавлен');
                 var data = jQuery.parseJSON(data);
+                $('#addComment').addClass('alert-success').addClass('alert').html("<b>Ваш комментарий добавлен</b>");
                 if (data.user.userName == 'admin') {
                 $('.comments-list').append(`
                     <li>
